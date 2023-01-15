@@ -5,7 +5,7 @@ import './sourcemap-register.cjs';/******/ "use strict";
 /******/ 
 /************************************************************************/
 var __webpack_exports__ = {};
-const {validateDependencies} = require('validateDependencies.js')
+const {validateDependencies} = require('./validateDependencies.js')
 
 async function run() {
   await validateDependencies()

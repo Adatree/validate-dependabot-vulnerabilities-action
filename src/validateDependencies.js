@@ -8,7 +8,7 @@ const validateDependencies = async () => {
     const owner = 'Adatree'
     const openState = 'open'
     const octokit = new Octokit({auth})
-    const repo = 'test'
+    const repo = process.env.GITHUB_REPOSITORY_NAME
     const response = await octokit.request('GET /repos/{owner}/{repo}/dependabot/alerts{?state,severity,ecosystem,package,manifest,scope,sort,direction,page,per_page,before,after,first,last}', {
         owner,
         repo

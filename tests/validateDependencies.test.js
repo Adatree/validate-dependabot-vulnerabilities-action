@@ -1,4 +1,4 @@
-const {validateDependencies, millisecondsInOneDay} = require("./validateDependencies.js")
+const {validateDependencies, millisecondsInOneDay} = require("../src/validateDependencies.js")
 const Octokit = require('octokit').Octokit
 
 jest.mock('octokit')
