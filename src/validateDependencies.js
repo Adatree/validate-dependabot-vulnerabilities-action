@@ -41,7 +41,6 @@ const validateHighAlerts = alerts => validateAlert(alerts, new Date().getTime() 
 // 1 month
 const validateMediumAlerts = alerts => validateAlert(alerts, new Date().getTime() - millisecondsInOneDay * 30)
 
-
 const validateAlert = (alerts = [], timestamp) => {
     alerts.forEach(alert => {
         const createdAt = alert.created_at
