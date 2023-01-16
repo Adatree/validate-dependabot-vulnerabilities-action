@@ -3,6 +3,8 @@ const Octokit = require('octokit').Octokit
 
 jest.mock('octokit')
 
+process.env.GITHUB_REPOSITORY = 'adatree/validate-dependabot-vulnerabilities-action'
+
 test('Build succeeds in case of no vulnerabilities identified', async () => {
     const dependabotNoOpenAlerts = []
     Octokit.mockImplementation(() => ({
