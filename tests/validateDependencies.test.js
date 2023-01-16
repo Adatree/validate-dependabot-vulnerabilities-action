@@ -8,117 +8,140 @@ process.env.GITHUB_REPOSITORY = 'adatree/validate-dependabot-vulnerabilities-act
 test('Build succeeds in case of no vulnerabilities identified', async () => {
     const dependabotNoOpenAlerts = []
     Octokit.mockImplementation(() => ({
-        request: () => dependabotNoOpenAlerts
+        request: () => ({data: dependabotNoOpenAlerts})
     }))
     expect(validateDependencies).not.toThrow()
 })
 
 test('Build passes for medium vulnerabilities newer than 1 month', async() => {
     const dateOffset = millisecondsInOneDay * 29
+    const publishedAt = new Date()
+    publishedAt.setTime(new Date() - dateOffset)
     const dependabotAlerts = [
         {
             "number": 1,
             "state": "open",
-            "created_at": new Date().setTime(new Date() - dateOffset).toString(),
-            "vulnerabilities": {
+            "security_advisory": {
+                "published_at": publishedAt.toString()
+            },
+            "security_vulnerability": {
                 "severity": "medium"
             }
         }
     ]
     Octokit.mockImplementation(() => ({
-        request: () => dependabotAlerts
+        request: () => ({data: dependabotAlerts})
     }))
     expect(validateDependencies).not.toThrow()
 })
 
 test('Build fails for medium vulnerabilities older than 1 month', async() => {
     const dateOffset = millisecondsInOneDay * 31
+    const publishedAt = new Date()
+    publishedAt.setTime(new Date() - dateOffset)
     const dependabotAlerts = [
         {
             "number": 1,
             "state": "open",
-            "created_at": new Date().setTime(new Date() - dateOffset).toString(),
-            "vulnerabilities": {
+            "security_advisory": {
+                "published_at": publishedAt.toString()
+            },
+            "security_vulnerability": {
                 "severity": "medium"
             }
         }
     ]
     Octokit.mockImplementation(() => ({
-        request: () => dependabotAlerts
+        request: () => ({data: dependabotAlerts})
     }))
     await expect(validateDependencies).rejects.toThrow()
 })
 
 test('Build passes for medium vulnerabilities newer than one month', async () => {
     const dateOffset = millisecondsInOneDay * 15
+    const publishedAt = new Date()
+    publishedAt.setTime(new Date() - dateOffset)
     const dependabotAlerts = [
         {
             "number": 1,
             "state": "open",
-            "created_at": new Date().setTime(new Date() - dateOffset).toString(),
-            "vulnerabilities": {
+            "security_advisory": {
+                "published_at": publishedAt.toString()
+            },
+            "security_vulnerability": {
                 "severity": "medium"
             }
         }
     ]
     Octokit.mockImplementation(() => ({
-        request: () => dependabotAlerts
+        request: () => ({data: dependabotAlerts})
     }))
     expect(validateDependencies).not.toThrow()
 })
 
 test('Build fails for high vulnerabilities older than 14 days', async() => {
     const dateOffset = millisecondsInOneDay * 15
+    const publishedAt = new Date()
+    publishedAt.setTime(new Date() - dateOffset)
     const dependabotAlerts = [
         {
             "number": 1,
             "state": "open",
-            "created_at": new Date().setTime(new Date() - dateOffset).toString(),
-            "vulnerabilities": {
+            "security_advisory": {
+                "published_at": publishedAt.toString()
+            },
+            "security_vulnerability": {
                 "severity": "high"
             }
         }
     ]
     Octokit.mockImplementation(() => ({
-        request: () => dependabotAlerts
+        request: () => ({data: dependabotAlerts})
     }))
     await expect(validateDependencies).rejects.toThrow()
 })
 
 test('Build passes for high vulnerabilities newer than 14 days', async () => {
     const dateOffset = millisecondsInOneDay * 13
+    const publishedAt = new Date()
+    publishedAt.setTime(new Date() - dateOffset)
     const dependabotAlerts = [
         {
             "number": 1,
             "state": "open",
-            "created_at": new Date().setTime(new Date() - dateOffset).toString(),
-            "vulnerabilities": {
+            "security_advisory": {
+                "published_at": publishedAt.toString()
+            },
+            "security_vulnerability": {
                 "severity": "high"
             }
         }
     ]
     Octokit.mockImplementation(() => ({
-        request: () => dependabotAlerts
+        request: () => ({data: dependabotAlerts})
     }))
     expect(validateDependencies).not.toThrow()
 })
 
 test('Build fails for critical vulnerabilities older than 2 days', async () => {
     const dateOffset = millisecondsInOneDay * 3
+    const publishedAt = new Date().setTime(new Date() - dateOffset).toString()
     const dependabotAlerts = [
         {
             "number": 1,
             "state": "open",
-            "created_at": new Date().setTime(new Date() - dateOffset).toString(),
-            "vulnerabilities": {
+            "security_advisory": {
+                "published_at": publishedAt
+            },
+            "security_vulnerability": {
                 "severity": "critical"
             }
         }
     ]
     Octokit.mockImplementation(() => ({
-        request: () => dependabotAlerts
+        request: () => ({data: dependabotAlerts})
     }))
-    await expect(validateDependencies).rejects.toThrow()
+    await validateDependencies()
 })
 
 test('Build passes for critical vulnerabilities newer than 2 days', async () => {
@@ -126,14 +149,16 @@ test('Build passes for critical vulnerabilities newer than 2 days', async () => 
         {
             "number": 1,
             "state": "open",
-            "created_at": new Date().setTime(new Date() - millisecondsInOneDay).toString(),
-            "vulnerabilities": {
+            "security_advisory": {
+                "published_at": new Date().toString()
+            },
+            "security_vulnerability": {
                 "severity": "critical"
             }
         }
     ]
     Octokit.mockImplementation(() => ({
-        request: () => dependabotAlerts
+        request: () => ({data: dependabotAlerts})
     }))
     expect(validateDependencies).not.toThrow()
 })

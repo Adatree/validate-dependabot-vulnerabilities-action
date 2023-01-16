@@ -33794,7 +33794,7 @@ const errorMessage = 'Build contains vulnerabilities that violate Adatree\'s inf
 const millisecondsInOneDay = 24 * 60 * 60 * 1000
 
 const validateDependencies = async () => {
-    const auth = process.env.GITHUB_PAT
+    const auth = process.env.TOKEN
     const owner = 'Adatree'
     const openState = 'open'
     const octokit = new Octokit({auth})
@@ -33804,12 +33804,12 @@ const validateDependencies = async () => {
         owner,
         repo
     })
-    const relevantAlerts = response.filter(alert => alert.state === openState)
+    const relevantAlerts = response.data.filter(alert => alert.state === openState)
     if (relevantAlerts.length === 0) {
         console.log('Build is safe and respects the Adatree infosec policy')
     } else {
         const alertsGroupedBySeverity = relevantAlerts.reduce((acc, alert) => {
-            const {severity} = alert.vulnerabilities
+            const {severity} = alert.security_vulnerability
             acc[severity] = acc[severity] || []
             acc[severity].push(alert)
             return acc
@@ -33833,8 +33833,11 @@ const validateMediumAlerts = alerts => validateAlert(alerts, new Date().getTime(
 
 const validateAlert = (alerts = [], timestamp) => {
     alerts.forEach(alert => {
-        const createdAt = alert.created_at
-        if (createdAt < timestamp) {
+        console.log(alert.security_advisory.published_at)
+        const publishedAt = Date.parse(alert.security_advisory.published_at)
+        console.log(publishedAt)
+        console.log(timestamp)
+        if (publishedAt < timestamp) {
             throw new Error(errorMessage)
         }
     })
