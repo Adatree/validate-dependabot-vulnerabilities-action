@@ -33794,7 +33794,7 @@ const errorMessage = 'Build contains vulnerabilities that violate Adatree\'s inf
 const millisecondsInOneDay = 24 * 60 * 60 * 1000
 
 const validateDependencies = async () => {
-    const auth = process.env.TOKEN
+    const auth = process.env.GH_TOKEN
     const owner = 'Adatree'
     const openState = 'open'
     const octokit = new Octokit({auth})
