@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Validate dependabot vulnerabilities do not violate Adatree's infosec policy",
   "main": "src/index.js",
-  "type": "commonjs",
   "scripts": {
     "lint": "eslint .",
     "prepare": "ncc build src/index.js -o dist --source-map --license licenses.txt",
