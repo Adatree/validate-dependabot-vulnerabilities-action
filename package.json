@@ -13,7 +13,7 @@
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.10.0",
-    "octokit": "^2.0.11"
+    "octokit": "^2.0.18"
   },
   "devDependencies": {
     "@vercel/ncc": "^0.31.1",
