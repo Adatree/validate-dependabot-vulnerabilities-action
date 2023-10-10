@@ -18,6 +18,7 @@ const validateDependencies = async () => {
     if (relevantAlerts.length === 0) {
         console.log('Build is safe and respects the Adatree infosec policy')
     } else {
+        console.log(relevantAlerts)
         const alertsGroupedBySeverity = relevantAlerts.reduce((acc, alert) => {
             const {severity} = alert.security_vulnerability
             acc[severity] = acc[severity] || []
