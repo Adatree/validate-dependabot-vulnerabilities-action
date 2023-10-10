@@ -43,11 +43,9 @@ const validateMediumAlerts = alerts => validateAlert(alerts, new Date().getTime(
 
 const validateAlert = (alerts = [], timestamp) => {
     alerts.forEach(alert => {
-        console.log(alert.security_advisory.published_at)
         const publishedAt = Date.parse(alert.security_advisory.published_at)
-        console.log(publishedAt)
-        console.log(timestamp)
         if (publishedAt < timestamp) {
+            console.log("Alert triggered", alert, publishedAt, timestamp)
             throw new Error(errorMessage)
         }
     })
