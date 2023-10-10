@@ -46,7 +46,7 @@ const validateAlert = (alerts = [], timestamp) => {
     alerts.forEach(alert => {
         const publishedAt = Date.parse(alert.security_advisory.published_at)
         if (publishedAt < timestamp) {
-            console.log("Alert triggered", alert, publishedAt, timestamp)
+            console.log(`${alert} - ${publishedAt} - ${timestamp}`)
             throw new Error(errorMessage)
         }
     })
