@@ -47,7 +47,8 @@ test('Build fails for medium vulnerabilities older than 1 month', async() => {
                 "published_at": publishedAt.toString()
             },
             "security_vulnerability": {
-                "severity": "medium"
+                "severity": "medium",
+                "first_patched_version": "1"
             }
         }
     ]
@@ -59,6 +60,28 @@ test('Build fails for medium vulnerabilities older than 1 month', async() => {
 
 test('Build passes for medium vulnerabilities newer than one month', async () => {
     const dateOffset = millisecondsInOneDay * 15
+    const publishedAt = new Date()
+    publishedAt.setTime(new Date() - dateOffset)
+    const dependabotAlerts = [
+        {
+            "number": 1,
+            "state": "open",
+            "security_advisory": {
+                "published_at": publishedAt.toString()
+            },
+            "security_vulnerability": {
+                "severity": "medium"
+            }
+        }
+    ]
+    Octokit.mockImplementation(() => ({
+        request: () => ({data: dependabotAlerts})
+    }))
+    expect(validateDependencies).not.toThrow()
+})
+
+test('Build passes for medium vulnerabilities when new patch is not available even if has been published more than a month ago', async () => {
+    const dateOffset = millisecondsInOneDay * 31
     const publishedAt = new Date()
     publishedAt.setTime(new Date() - dateOffset)
     const dependabotAlerts = [
@@ -91,7 +114,8 @@ test('Build fails for high vulnerabilities older than 14 days', async() => {
                 "published_at": publishedAt.toString()
             },
             "security_vulnerability": {
-                "severity": "high"
+                "severity": "high",
+                "first_patched_version": "1"
             }
         }
     ]

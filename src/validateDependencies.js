@@ -45,8 +45,8 @@ const validateMediumAlerts = alerts => validateAlert(alerts, new Date().getTime(
 const validateAlert = (alerts = [], timestamp) => {
     alerts.forEach(alert => {
         const publishedAt = Date.parse(alert.security_advisory.published_at)
-        if (publishedAt < timestamp) {
-            console.log(`${alert} - ${publishedAt} - ${timestamp}`)
+        if (publishedAt < timestamp && alert.security_vulnerability.first_patched_version) {
+            console.log(`patch is available and a fix is due - ${JSON.stringify(alert, null, 2)}`)
             throw new Error(errorMessage)
         }
     })
