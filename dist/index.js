@@ -16884,7 +16884,6 @@ const millisecondsInOneDay = 24 * 60 * 60 * 1000
 
 const validateDependencies = async () => {
     const auth = process.env.GH_TOKEN
-    console.log("auth", auth)
     const owner = 'Adatree'
     const openState = 'open'
     const octokit = new Octokit({
