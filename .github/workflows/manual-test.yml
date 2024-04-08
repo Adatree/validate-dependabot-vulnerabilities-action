@@ -2,9 +2,11 @@ name: manual action test
 
 on:
   workflow_dispatch:
+# env: 
+  # GH_TOKEN: {{ GH_TOKEN }}
 
 jobs:
   action-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: Adatree/validate-dependabot-vulnerabilities-action@1.1.2
+      - uses: Adatree/validate-dependabot-vulnerabilities-action@fc7b7e1bd42057302bc5aac5a8bbd6b2827451ed
