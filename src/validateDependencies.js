@@ -9,9 +9,6 @@ const validateDependencies = async () => {
     const owner = 'Adatree'
     const openState = 'open'
     const octokit = new Octokit({
-        request: {
-            fetch,
-        },
         auth
     })
     const repo = process.env.GITHUB_REPOSITORY.split('/')[1]
