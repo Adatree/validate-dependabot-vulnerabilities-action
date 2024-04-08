@@ -16884,9 +16884,15 @@ const millisecondsInOneDay = 24 * 60 * 60 * 1000
 
 const validateDependencies = async () => {
     const auth = process.env.GH_TOKEN
+    console.log("auth", auth)
     const owner = 'Adatree'
     const openState = 'open'
-    const octokit = new Octokit({auth})
+    const octokit = new Octokit({
+        request: {
+            fetch,
+        },
+        auth
+    })
     const repo = process.env.GITHUB_REPOSITORY.split('/')[1]
     console.log(`Retrieving dependabot alerts for repository ${repo}`)
     const response = await octokit.request('GET /repos/{owner}/{repo}/dependabot/alerts{?state,severity,ecosystem,package,manifest,scope,sort,direction,page,per_page,before,after,first,last}', {
