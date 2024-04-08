@@ -1,5 +1,4 @@
 const {Octokit} = require('octokit')
-import fetch from 'node-fetch';
 
 const errorMessage = 'Build contains vulnerabilities that violate Adatree\'s infosec policy. Please check dependabot alerts.'
 const millisecondsInOneDay = 24 * 60 * 60 * 1000
