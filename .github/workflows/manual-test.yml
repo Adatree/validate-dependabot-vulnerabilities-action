@@ -1,0 +1,10 @@
+name: manual action test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  action-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: Adatree/validate-dependabot-vulnerabilities-action@1.1.1
