@@ -9,4 +9,4 @@ jobs:
   action-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: Adatree/validate-dependabot-vulnerabilities-action@1.1.3
+      - uses: Adatree/validate-dependabot-vulnerabilities-action@1.1.4
