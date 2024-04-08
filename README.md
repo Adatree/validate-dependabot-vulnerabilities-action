@@ -1,1 +1,1 @@
-# Validate dependabot vulnerabilities action.
+# Validate dependabot vulnerabilities action
